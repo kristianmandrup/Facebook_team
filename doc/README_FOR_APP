@@ -1,2 +1,52 @@
 Use this README file to introduce your application and point to useful places in the API for learning more.
 Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+
+	= link_to 'Facebook Login', Koala::Facebook::OAuth.new.url_for_oauth_code(:callback => oauth_redirect_url)
+
+	Where oauth_redirect_url is the URL to an action which will handle the rest of the authentication flow.
+
+Assuming oauth_redirect_url points to the OAuthController#redirect action, you can finish off authentication with the following bit of code:
+
+# app/controllers/oauth_controller
+def redirect
+  session[:access_token] = Koala::Facebook::OAuth.new(oauth_redirect_url).get_access_token(params[:code]) if params[:code]
+
+  redirect_to session[:access_token] ? success_path : failure_path
+end
+
+Analytics
+
+https://developers.facebook.com/docs/guides/web/#insights
+
+Gain access to insights for your website by adding a fb:admins, fb:page_id, or fb:app_id meta tag to your root webpage, linking it to your personal account or an application.
+
+<meta property="fb:admins" content="759907757" />
+
+App Request:
+
+https://developers.facebook.com/blog/post/453/
+
+https://developers.facebook.com/docs/channels/
+
+Requests are a great way to enable users to invite their friends to use your app. Requests integrate with Facebook notifications and dashboards, ensuring that a user will see the requests from their friends whenever they are on Facebook. You can also use requests to have a user notify their friends to take a specific action in your app, such as accepting a gift or helping the user complete a quest.
+
+There are two types of requests that can be sent from an app:
+
+User-generated requests: These requests are confirmed by a user’s explicit action on a request dialog. These requests update the bookmark count for the recipient. You send requests by using the Request Dialog.
+
+App-generated requests: These requests can be initiated and sent only to users who have authorized your app. Developers can send these requests using the Graph API. You should use these requests to update the bookmark count to encourage a user to re-engage in the app (e.g., your friend finished her move in a game and it’s now your turn).
+
+If you prefer to have your app send requests directly to the user (an App-generated request), you post a request to the apprequest connection of the User Graph object:
+
+You can determining all the pending requests for a given user by accessing the apprequests connection of the User Object in the Graph API.
+
+Registration via Facebook
+https://developers.facebook.com/docs/plugins/registration/
+
+Example Koala app:
+
+http://www.banane.com/2011/10/13/ruby-on-rails-and-facebook-api-koala-basic-example/
+
+Mock Facebook - server
+
+https://github.com/rogerhu/mockfacebook

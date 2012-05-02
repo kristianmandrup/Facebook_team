@@ -1,0 +1,12 @@
+facebook:
+  scope: email # global setting for all environments
+  test:
+    app_id: 285193711555371
+    secret_key: 9d5501e9bda66481fed4c88eaaf28712
+  development: 
+    app_id: 285193711555371
+    secret_key: 9d5501e9bda66481fed4c88eaaf28712(
+  production: 
+    app_id: 285193711555371
+    secret_key: 9d5501e9bda66481fed4c88eaaf28712(
+  # whatever other environments you have 
